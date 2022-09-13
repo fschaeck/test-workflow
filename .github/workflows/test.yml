@@ -16,8 +16,6 @@ jobs:
           import subprocess
           import pathlib
           import os
-          import sys
-          print(sys.version)
           pathlib.Path(os.path.expanduser("~/somedir")).mkdir(parents=True, exist_ok=True)
           secrets = os.getenv("MY_SECRETS")
           # using os.path.expanduser() instead of hard-coding the user's home directory
