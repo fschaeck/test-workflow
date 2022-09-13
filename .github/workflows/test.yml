@@ -16,6 +16,8 @@ jobs:
           import subprocess
           import pathlib
           import os
+          import sys
+          print(sys.version)
           pathlib.Path(os.path.expanduser("~/somedir")).mkdir(parents=True, exist_ok=True)
           secrets = os.getenv("MY_SECRETS")
           # using os.path.expanduser() instead of hard-coding the user's home directory
@@ -30,9 +32,8 @@ jobs:
               # If len(line)==0 we are at EOF and do not need to print this line.
               # An empty line from main.py would be '\n' with len('\n')==1!
               if len(line)>0:
-                # We decode the byte array to a string
-                # and suppress the newline print would add (end=''), since
-                # line already ends with the newline read from the file
+                # We decode the byte array to a string and strip
+                # the new-line characters \r and \n read from the file
                 print(line.decode('UTF-8').strip('\r\n'))
               if retcode is not None:
                   break
