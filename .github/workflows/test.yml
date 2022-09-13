@@ -32,8 +32,9 @@ jobs:
               # If len(line)==0 we are at EOF and do not need to print this line.
               # An empty line from main.py would be '\n' with len('\n')==1!
               if len(line)>0:
-                # We decode the byte array to a string and strip
-                # the new-line characters \r and \n read from the file
-                print(line.decode('UTF-8').strip('\r\n'))
+                # We decode the byte array to a string and strip the
+                # new-line characters \r and \n from the end of the line,
+                # which were read from the file
+                print(line.decode('UTF-8').rstrip('\r\n'))
               if retcode is not None:
                   break
