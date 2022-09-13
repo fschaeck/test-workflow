@@ -1,0 +1,31 @@
+name: write-secrets-to-file
+on:
+  push:
+    branches:
+    - main
+jobs:
+  write-the-secrets-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - shell: python
+        name: Configure agent
+        env:
+          MY_SECRETS: ${{ secrets.LIST_OF_SECRETS }}
+        run: |
+          import subprocess
+          import pathlib
+          import os
+          pathlib.Path(os.path.expanduser("~/somedir")).mkdir(parents=True, exist_ok=True)
+          secrets = os.getenv("MY_SECRETS")
+          with open(os.path.expanduser("~/somedir/mykeys.yaml"),"w",encoding="UTF-8") as file:
+              file.write(secrets)
+          mycmd = ["python","./main.py"]
+          p = subprocess.Popen(mycmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+          while(True):
+              # returns None while subprocess is running
+              retcode = p.poll() 
+              line = p.stdout.readline().strip().decode('UTF-8')
+              print(line)
+              if retcode is not None:
+                  break
