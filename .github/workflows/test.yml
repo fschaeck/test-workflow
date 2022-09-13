@@ -33,6 +33,6 @@ jobs:
                 # We decode the byte array to a string
                 # and suppress the newline print would add (end=''), since
                 # line already ends with the newline read from the file
-                print(line.decode('UTF-8'),end='')
+                print(line.decode('UTF-8').strip('\n'))
               if retcode is not None:
                   break
